@@ -1,4 +1,6 @@
 // Find the maximum
+maxOfTwoNumbers = (a, b) => Math.max(a, b);
+
 
 // Finding Longest Word
 let words = [
@@ -11,19 +13,35 @@ let words = [
   'crackpot'
 ];
 
-    
+findLongestWord = (words) => {  // REDUIR
+  let max = words[0];
+
+  for (i = 1; i < words.length; i++) {
+    if (words[i].length > max.length) {
+      max = words[i];
+    }
+  }
+
+  return max;
+
+  /*  let index = words.sort((a, b) => { b.length - a.length });
+ 
+   console.log(index);
+   return index[0]; */
+}
 
 
-console.log(findLongestWord(words));
 // Calculating a Sum
-
 let numbers = [6, 12, 1, 18, 13, 16, 2, 1, 8, 10];
+sumArray = (numbers) => numbers.reduce((a, b) => a + b, 0);
+
 
 // Calculate the Average
-
 let numbersAvg = [2, 6, 9, 10, 7, 4, 1, 9];
+averageNumbers = numbersAvg => (numbersAvg.length && Array.isArray(numbersAvg)) ? sumArray(numbersAvg) / numbersAvg.length : undefined;
 
-// Array of Strings
+
+// Array of Strings // REDUIR
 let wordsArr = [
   'seat',
   'correspond',
@@ -37,7 +55,21 @@ let wordsArr = [
   'palace'
 ];
 
-// Unique Arrays
+averageWordLength = (wordsArr) => {
+  let suma = 0;
+
+  for (i = 0; i < wordsArr.length; i++) {
+    suma += wordsArr[i].length;
+  }
+
+  if (wordsArr.length) {
+    return (suma / wordsArr.length);
+  }
+  return undefined;
+}
+
+
+// Unique Arrays  // REDUIR
 let wordsUnique = [
   'crab',
   'poison',
@@ -52,6 +84,15 @@ let wordsUnique = [
   'bring'
 ];
 
+uniquifyArray = (wordsUnique) => {
+
+  if (wordsUnique.length > 0) {
+    return [...new Set(wordsUnique)];
+  }
+  return undefined;
+}
+
+
 // Finding Elements
 let wordsFind = [
   'machine',
@@ -63,8 +104,10 @@ let wordsFind = [
   'truth',
   'disobedience'
 ];
+doesWordExist = (wordsFind, entrada) => wordsFind.includes(entrada);
 
-// Counting Repetion
+
+// Counting Repetion  // REDUIR
 let wordsCount = [
   'machine',
   'matter',
@@ -78,8 +121,25 @@ let wordsCount = [
   'disobedience',
   'matter'
 ];
-// Bonus Quest
 
+howManyTimes = (wordsCount, entrada) => {
+  let contador = 0;
+
+  for (i = 0; i < wordsCount.length; i++) {
+    if (wordsCount[i].includes(entrada)) {
+      contador++;
+    }
+  }
+
+  if (wordsCount.length == 0) {
+    return undefined;
+  }
+  return contador;
+
+}
+
+
+// Bonus Quest  -> REDUIR
 let matrix = [
   [8, 2, 22, 97, 38, 15, 0, 40, 0, 75, 4, 5, 7, 78, 52, 12, 50, 77, 91, 8],
   [49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 69, 48, 4, 56, 62, 0],
@@ -102,3 +162,49 @@ let matrix = [
   [20, 73, 35, 29, 78, 31, 90, 1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 5, 54],
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
+
+greatestProduct = (matrix) => {
+
+  let X = maxEixos(matrix, 0);
+  let Y = maxEixos(matrix, 1);
+  let Z = maxEixos(matrix, 2);
+
+  console.log(maxEixos(matrix, 2));
+  return Math.max(Math.max(X, Y), Z);
+}
+
+maxEixos = (matrix, eix) => {
+  let numMax = 1;
+  let temp = 1;
+
+  for (i = 0; i < matrix.length; i++) {
+    for (j = 0; j < matrix[i].length; j++) {
+      for (k = 0; k < 4; k++) {
+        switch (eix) {
+          case 0:     // X: 48477312
+            if (j + k < matrix.length) {
+              temp *= matrix[i][j + k];
+            }
+            break;
+
+          case 1:     // Y: 51267216
+            if (i + k < matrix.length) {
+              temp *= matrix[i + k][j];
+            }
+
+            break;
+
+          case 2:     // Z: 6561
+            if (i + k < matrix.length && j + k < matrix.length) {
+              temp *= matrix[i + k][j + k];
+            }
+            break;
+        }
+      }
+      numMax = Math.max(numMax, temp);
+      temp = 1;
+    }
+  }
+
+  return numMax;
+}
